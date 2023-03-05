@@ -40,9 +40,29 @@ alter table dept_emp drop index dept_emp;
 alter table dept_emp drop index from_date;
 analyze table dept_emp;
 
-
+alter table salaries drop foreign key salaries_ibfk_1;
 alter table dept_manager drop foreign key dept_manager_ibfk_1;
 alter table titles drop foreign key titles_ibfk_1;
 alter table employees drop primary key;
 analyze table employees, dept_emp;
 
+explain select a.emp_no, b.first_name, b.last_name
+from dept_emp a inner join employees b
+on a.emp_no = b.emp_no;
+
+explain select a.emp_no, b.first_name, b.last_name
+from dept_emp a inner join employees b
+on a.emp_no = b.emp_no
+where a.emp_no = 10001;
+
+alter table employees add primary key (emp_no);
+alter table dept_emp add primary key (emp_no, dept_no);
+
+explain select a.emp_no, b.first_name, b.last_name
+from dept_emp a inner join employees b
+on a.emp_no = b.emp_no;
+
+explain select a.emp_no, b.first_name, b.last_name
+from dept_emp a inner join employees b
+on a.emp_no = b.emp_no
+where a.emp_no = 10001;
